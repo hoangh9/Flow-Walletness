@@ -21,7 +21,10 @@ export default class WalletApiClient {
     const address = await this.pollJobUntilComplete(result.jobId)
     return address
   }
-
+  async loginAccount(username,password) {
+    const result = await this.post("/v1/getAddressByUsername",{username:username,password:password})
+    return result;
+  }
   async initFungibleToken(address, token) {    
     return this.post(
       `/v1/accounts/${address}/fungible-tokens/${token}`

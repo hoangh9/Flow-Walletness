@@ -1,5 +1,5 @@
 import WalletApiClient from "../../lib/walletApi";
-import {adminAddress, baseUrl, fusdTokenName , usernamedemo , passworddemo} from "../../lib/config"
+import {adminAddress, baseUrl, fusdTokenName } from "../../lib/config"
 
 const walletApi = new WalletApiClient(baseUrl)
 
@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   }
 }
 
+// list accounts
 async function get(req, res) {
   const accounts = await walletApi.getAccounts()
   const result = await Promise.all(accounts.map(async account => ({
@@ -28,13 +29,16 @@ async function get(req, res) {
 
 const emptyBalance = "0.00000000"
 
-async function post(req, res) {
-  const address = await walletApi.createAccount("demo1234","demo1234",fusdTokenName)
-  const result = {
-    address
-  }
 
-  res.status(201).json(result)
+//register
+async function post(req, res) {
+  const { username, password } = req.body
+  const result = await walletApi.createAccount(username,password,fusdTokenName)
+  res.status(201).json({
+    "message": "New User Created",
+    "error": false,
+    data:result
+  })
 }
 
 async function getFusdBalance(address) {
