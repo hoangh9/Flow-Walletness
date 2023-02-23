@@ -1,7 +1,7 @@
 const jobPollInterval = 1000
 const jobPollAttempts = 40
 
-const jobStatusComplete = "Complete"
+const jobStatusComplete = "COMPLETE"
 const jobStatusError = "Error"
 
 const contentTypeJson = "application/json"
@@ -17,9 +17,16 @@ export default class WalletApiClient {
   }
 
   async createAccount(username,password) {
-    const result = await this.post("/v1/accounts",{username:username,password:password})
-    const address = await this.pollJobUntilComplete(result.jobId)
-    return address
+    const check = await this.get("/v1//username/"+username)
+    if (typeof(check.address) == "undefined"){
+      console.log("hello")
+      const result = await this.post("/v1/accounts",{username:username,password:password})
+      const address = await this.pollJobUntilComplete(result.jobId)
+      return address
+    }else{
+      return null
+    }
+
   }
   async loginAccount(username,password) {
     const result = await this.post("/v1/getAddressByUsername",{username:username,password:password})
@@ -73,13 +80,13 @@ export default class WalletApiClient {
 
   async pollJobUntilComplete(id) {
     for (let i = 0; i < jobPollAttempts; i++) {
+      
       const job = await this.getJob(id)
-
-      if (job.status === jobStatusError) {
+      if (job.state === jobStatusError) {
         throw "failed job"
       }
       
-      if (job.status === jobStatusComplete) {
+      if (job.state === jobStatusComplete) {
         return job.result
       }
 

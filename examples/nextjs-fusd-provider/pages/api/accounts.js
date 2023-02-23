@@ -29,18 +29,6 @@ async function get(req, res) {
 
 const emptyBalance = "0.00000000"
 
-
-//register
-async function post(req, res) {
-  const { username, password } = req.body
-  const result = await walletApi.createAccount(username,password,fusdTokenName)
-  res.status(201).json({
-    "message": "New User Created",
-    "error": false,
-    data:result
-  })
-}
-
 async function getFusdBalance(address) {
   const result = await walletApi.getFungibleToken(address, fusdTokenName)
   return result.balance
