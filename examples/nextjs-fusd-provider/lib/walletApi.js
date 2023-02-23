@@ -29,7 +29,9 @@ export default class WalletApiClient {
 
   }
   async loginAccount(username,password) {
+    
     const result = await this.post("/v1/getAddressByUsername",{username:username,password:password})
+    
     return result;
   }
   async initFungibleToken(address, token) {    

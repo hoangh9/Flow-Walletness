@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
 // Login
 async function post(req, res) {
-    const { username, password } = req.body
+  const { username, password } = JSON.parse(req.body)
   const result = await walletApi.loginAccount(username,password)
 
   res.status(200).json({
