@@ -12,14 +12,18 @@ export default class WalletApiClient {
     this.baseUrl = baseUrl
   }
 
-  async getAccounts() {
-    return this.get("/v1/accounts")
+  async getAccounts(username) {
+    if(username == null){
+      return this.get("/v1/accounts")
+    }else{
+      return this.get("/v1/username/"+username)
+    }
+    
   }
 
   async createAccount(username,password) {
-    const check = await this.get("/v1//username/"+username)
+    const check = await this.get("/v1/username/"+username)
     if (typeof(check.address) == "undefined"){
-      console.log("hello")
       const result = await this.post("/v1/accounts",{username:username,password:password})
       const address = await this.pollJobUntilComplete(result.jobId)
       return address
