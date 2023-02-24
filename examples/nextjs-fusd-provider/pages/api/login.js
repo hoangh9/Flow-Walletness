@@ -15,7 +15,16 @@ export default async function handler(req, res) {
 
 // Login
 async function post(req, res) {
-  const { username, password } = JSON.parse(req.body)
+  let username = null;
+  let password = null;
+  if (req.body.username){
+    username = req.body.username;
+    password = req.body.password;
+  }else{
+    const DataReq = JSON.parse(req.body);
+    username = DataReq.username;
+    password = DataReq.password;
+  }
   const result = await walletApi.loginAccount(username,password)
   res.status(200).json({
     "message": "Login success",
