@@ -15,18 +15,17 @@ export default async function handler(req, res) {
 
 //register
 async function post(req, res) {
-  const username = null;
-  const password = null;
+  let username = null;
+  let password = null;
   if (req.body.username){
-  username = req.body.username;
-  password = req.body.password;
+    username = req.body.username;
+    password = req.body.password;
   }else{
     const DataReq = JSON.parse(req.body);
     username = DataReq.username;
     password = DataReq.password;
   }
   
-  console.log(username)
   const address = await walletApi.createAccount(username,password,fusdTokenName)
   if(address != null){
     await walletApi.initFungibleToken(address, fusdTokenName)
