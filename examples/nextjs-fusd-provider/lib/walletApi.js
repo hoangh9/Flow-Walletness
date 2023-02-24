@@ -14,6 +14,7 @@ export default class WalletApiClient {
 
   async getAccounts(username) {
     if(username == null){
+      console.
       return this.get("/v1/accounts")
     }else{
       return this.get("/v1/username/"+username)
