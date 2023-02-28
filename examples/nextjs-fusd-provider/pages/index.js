@@ -10,7 +10,7 @@ export default function Home() {
 
   const syncAccounts = async () => {
     const accounts = await listAccounts()
-    setAccounts(accounts)
+    setAccounts(accounts.data)
   }
 
   const addAccount = account => {
