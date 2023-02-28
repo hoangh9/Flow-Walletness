@@ -17,11 +17,11 @@ export default async function handler(req, res) {
 async function get(req, res) {
     const listTokenDeposits = await walletApi.getTokenDeposits(req.query.address,fusdTokenName);
     listTokenDeposits.forEach(item => {
-      item.push({type:"income"})
+      item.type = "income"
     });
     const listTokenWithdrawals = await walletApi.getTokenwithdrawals(req.query.address,fusdTokenName);
     listTokenWithdrawals.forEach(item => {
-      item.push({type:"expense"})
+      item.type = "expense"
     });
     const data = listTokenDeposits.concat(listTokenWithdrawals).sort((a, b) => a.createdAt - b.createdAt);
     console.log(data);
