@@ -18,7 +18,7 @@ async function get(req, res) {
   let result = null
   if (typeof req.query.username !== 'undefined'){
     const account = await walletApi.getAccounts(req.query.username)
-    if (typeof(check.address) == "undefined"){
+    if (typeof(account.address) == "undefined"){
       res.status(200).json({
         "message": "dont exist account",
         "error": true,
@@ -30,7 +30,7 @@ async function get(req, res) {
         username: account.address,
         balance: await getFusdBalance(account.address) || "0",
         isAdmin: account.address === adminAddress,
-        initfungibletoken: getFusdBalance(account.address) ? true : false 
+        initfungibletoken: await getFusdBalance(account.address) ? true : false 
       }
     }
 
