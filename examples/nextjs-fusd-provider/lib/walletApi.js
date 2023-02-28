@@ -20,7 +20,11 @@ export default class WalletApiClient {
     }
     
   }
-
+  async getTransactions(address) {
+      return this.get("/v1/accounts/"+address+"/transactions")
+    }
+    
+  }
   async createAccount(username,password) {
     const check = await this.get("/v1/username/"+username)
     if (typeof(check.address) == "undefined"){
