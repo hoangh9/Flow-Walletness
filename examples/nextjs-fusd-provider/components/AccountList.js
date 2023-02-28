@@ -46,7 +46,7 @@ export default function AccountList({ accounts, onCreate , onReload }) {
     setIsLoading(false)
   }
   function formatAccounts(accounts) {
-    return accounts.map(account => {
+    return accounts.data.map(account => {
       if (account.isAdmin) {
         return formatAdminAccount(account)
       }
