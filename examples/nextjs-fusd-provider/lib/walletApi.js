@@ -22,7 +22,6 @@ export default class WalletApiClient {
   }
   async getTransactions(address) {
       return this.get("/v1/accounts/"+address+"/transactions")
-    }
     
   }
   async createAccount(username,password) {
