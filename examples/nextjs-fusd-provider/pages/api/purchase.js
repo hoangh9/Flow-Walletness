@@ -12,7 +12,17 @@ export default async function handler(req, res) {
 }
 
 async function post(req, res) {
-  const { recipient, amount } = req.body
+
+  let recipient = null;
+  let amount = null;
+  if (req.body.recipient){
+    recipient = req.body.recipient;
+    amount = req.body.amount;
+  }else{
+    const DataReq = JSON.parse(req.body);
+    recipient = DataReq.recipient;
+    amount = DataReq.amount;
+  }
 
   await walletApi.createFungibleTokenWithdrawal(
     adminAddress, 
